@@ -22,42 +22,37 @@ const Calendar: React.FC<CalendarProps> = () => {
         return new Date(year, month + 1, 0).getDate();
     };
 
-   const generateCalendar = (): number[][] => {
-    const year = selectedDate.getFullYear();
-    const month = selectedDate.getMonth();
-    const daysInMonth = getDaysInMonth(year, month);
-    const firstDayOfMonth = new Date(year, month, 1).getDay();
-    const weeks: number[][] = [];
-  
-    let dayCount = 1;
-    let nextMonthDayCount = 1;
-  
-    for (let i = 0; i < 6; i++) {
-      const days: number[] = [];
-      
-      for (let j = 0; j < 7; j++) {
-        if ((i === 0 && j < firstDayOfMonth) || dayCount > daysInMonth) {
-          // Days from the previous or next month
-          const daysInPrevMonth = getDaysInMonth(year, month - 1);
-          const prevMonthDays = daysInPrevMonth - firstDayOfMonth + j + 1;
+    const generateCalendar = (): object[][] => {
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.getMonth();
+        const daysInMonth = getDaysInMonth(year, month);
+        const firstDayOfMonth = new Date(year, month, 1).getDay();
+        const weeks: object[][] = [];
 
-          days.push(dayCount > daysInMonth ? nextMonthDayCount : prevMonthDays > 0 ? prevMonthDays : 0);
-          {dayCount > daysInMonth ? nextMonthDayCount++ : null}
-        } else {
-          // Days from the current month
-          days.push(dayCount);
-          dayCount++;
+        let dayCount = 1;
+        let nextMonthDayCount = 1;
+
+        for (let i = 0; i < 6; i++) {
+            const days: object[] = [];
+
+            for (let j = 0; j < 7; j++) {
+                if ((i === 0 && j < firstDayOfMonth) || dayCount > daysInMonth) {
+                    const daysInPrevMonth = getDaysInMonth(year, month - 1);
+                    const prevMonthDays = daysInPrevMonth - firstDayOfMonth + j + 1;
+
+                    days.push(dayCount > daysInMonth ? {day:nextMonthDayCount , type: 'nextMonth'} : prevMonthDays > 0 ? {day:prevMonthDays, type: 'prevMonthDays'} : {});
+                    { dayCount > daysInMonth ? nextMonthDayCount++ : null }
+                } else {
+                    days.push({day:dayCount});
+                    dayCount++;
+                }
+            }
+
+            weeks.push(days);
         }
-      }
-  
-      weeks.push(days);
-    }
-  
-    return weeks;
-  };
 
-      
-      
+        return weeks;
+    };
 
     const handlePrevMonth = (): void => {
         setSelectedDate((prevDate) => new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1));
@@ -94,6 +89,8 @@ const Calendar: React.FC<CalendarProps> = () => {
         setPopupVisibility(false);
     };
 
+    console.log()
+
     return (
         <div className="calendar-container">
             <div className="calendar-header">
@@ -112,15 +109,15 @@ const Calendar: React.FC<CalendarProps> = () => {
                         {week.map((day, dayIndex) => (
                             <div
                                 key={dayIndex}
-                                className="day"
-                                onClick={() => handleDayClick(day)}
+                                className={`day ${day?.type ? 'disabled' : ''}`}
+                                onClick={() => handleDayClick(day?.day)}
                             >
-                                {day}
-                                {events
+                                <span>{day?.day}</span>
+                                {day?.type ? null : events
                                     .filter(
                                         (event) =>
                                             event.date ===
-                                            new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day).getTime()
+                                            new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day?.day).getTime()
                                     )
                                     .map((event, index) => (
                                         <div key={index} className={`event ${event.type}`} title={event.title}>

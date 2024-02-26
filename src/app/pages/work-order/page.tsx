@@ -108,7 +108,7 @@ const Home: React.FC = () => {
         </thead>
         <tbody>
           {workOrders.map((order) => (
-            <tr key={order.id}>
+            <tr key={order.id} style={{borderBottom: '1px solid #ccc'}}>
               <td className='tdBody'>{order.id}</td>
               <td className='tdBody'>{order.donor}</td>
               <td className='tdBody'>{order.panels}</td>
