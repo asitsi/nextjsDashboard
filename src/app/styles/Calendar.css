@@ -1,0 +1,138 @@
+/* styles/InteractiveCalendar.css */
+.interactive-calendar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  
+  .day {
+    border: 1px solid #ccc;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .day span {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  
+  .day.selected {
+    background-color: #aee5fc; /* Light blue for selected date */
+  }
+  
+  .event,
+  .reminder {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .event {
+    background-color: #b2ffb2; /* Light green for events */
+  }
+  
+  .reminder {
+    background-color: #ffdb58; /* Light yellow for reminders */
+  }
+  
+  .event-reminder-container {
+    flex: 1;
+    margin-left: 20px;
+  }
+  
+  .event-reminder-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .event-reminder-input input {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .event-reminder-input select {
+    margin-right: 10px;
+  }
+  
+  .event-reminder-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .formInput {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    outline: none;
+}
+
+.formInput:focus {
+    background-color: rgba(56,204,119,0.2);
+}
+
+/* Calendar.css */
+
+.calendar-container {
+  width: 1000px;
+  margin: auto;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+button {
+  font-size: 1rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+h2 {
+  margin: 0;
+}
+
+.days-of-week {
+  display: flex;
+  justify-content: space-between;
+  background-color: #eee;
+  padding: 0.5rem 3rem;
+  font-weight: bold;
+}
+
+.week {
+  display: flex;
+}
+
+.day {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: center;
+  background-color: #fff;
+}
+
+.empty-day {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: center;
+  background-color: #f5f5f5;
+}
