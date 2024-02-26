@@ -97,9 +97,9 @@ const Calendar: React.FC<CalendarProps> = () => {
     return (
         <div className="calendar-container">
             <div className="calendar-header">
-                <button onClick={handlePrevMonth}>&lt;</button>
+                <button onClick={handlePrevMonth} style={{fontWeight: 'bold'}}>&lt;</button>
                 <h2>{selectedDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h2>
-                <button onClick={handleNextMonth}>&gt;</button>
+                <button onClick={handleNextMonth} style={{fontWeight: 'bold'}}>&gt;</button>
             </div>
             <div className="days-of-week">
                 {daysOfWeek.map((day) => (
@@ -114,6 +114,7 @@ const Calendar: React.FC<CalendarProps> = () => {
                                 key={dayIndex}
                                 className={`day ${day?.type ? 'disabled' : ''}`}
                                 onClick={() => handleDayClick(day?.day)}
+                                style={{minHeight: 80}}
                             >
                                 <span>{day?.day}</span>
                                 {day?.type ? null : events
