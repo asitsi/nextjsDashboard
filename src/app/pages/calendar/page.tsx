@@ -7,6 +7,11 @@ import { Event } from '@/app/directory/interface';
 
 interface CalendarProps { }
 
+interface Day {
+    day: number;
+    type?: string
+}
+
 const Calendar: React.FC<CalendarProps> = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [clickDay, setClickDay] = useState<number | undefined>();
@@ -22,25 +27,25 @@ const Calendar: React.FC<CalendarProps> = () => {
         return new Date(year, month + 1, 0).getDate();
     };
 
-    const generateCalendar = (): object[][] => {
+    const generateCalendar = (): Day[][] => {
         const year = selectedDate.getFullYear();
         const month = selectedDate.getMonth();
         const daysInMonth = getDaysInMonth(year, month);
         const firstDayOfMonth = new Date(year, month, 1).getDay();
-        const weeks: object[][] = [];
+        const weeks: Day[][] = [];
 
         let dayCount = 1;
         let nextMonthDayCount = 1;
 
         for (let i = 0; i < 6; i++) {
-            const days: object[] = [];
+            const days: Day[] = [];
 
             for (let j = 0; j < 7; j++) {
                 if ((i === 0 && j < firstDayOfMonth) || dayCount > daysInMonth) {
                     const daysInPrevMonth = getDaysInMonth(year, month - 1);
                     const prevMonthDays = daysInPrevMonth - firstDayOfMonth + j + 1;
 
-                    days.push(dayCount > daysInMonth ? {day:nextMonthDayCount , type: 'nextMonth'} : prevMonthDays > 0 ? {day:prevMonthDays, type: 'prevMonthDays'} : {});
+                    days.push(dayCount > daysInMonth ? { day: nextMonthDayCount, type: 'nextMonth' } : prevMonthDays > 0 ? { day: prevMonthDays, type: 'prevMonthDays' } : { day: 0 });
                     { dayCount > daysInMonth ? nextMonthDayCount++ : null }
                 } else {
                     days.push({day:dayCount});
@@ -88,8 +93,6 @@ const Calendar: React.FC<CalendarProps> = () => {
     const handleClosePopup = () => {
         setPopupVisibility(false);
     };
-
-    console.log()
 
     return (
         <div className="calendar-container">
